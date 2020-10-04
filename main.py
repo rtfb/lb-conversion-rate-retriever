@@ -18,10 +18,17 @@ class converter:
         rates = BeautifulSoup(response.text, "xml")
 
         node = rates.find(self.get_exchange_rate_node_filter())
-        return node.santykis.text
+        rate_str = node.santykis.text
+        return self._usd_to_eur(self._decimal_comma_to_decimal_point(rate_str))
 
     def get_exchange_rate_node_filter(self):
         return lambda tag: tag.name == "item" and tag.valiutos_kodas.text == self.currency
+
+    def _decimal_comma_to_decimal_point(self, num):
+        return num.replace(',', '.')
+
+    def _usd_to_eur(self, rate_str):
+        return 1.0 / float(rate_str)
 
 
 def main():
