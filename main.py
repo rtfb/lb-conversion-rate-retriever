@@ -37,7 +37,7 @@ def main():
         date_string = line.rstrip()
         datetime.datetime.strptime(date_string, '%Y-%m-%d')
 
-        print(calc.get_exchange_rate(date_string))
+        print('{:.3f}'.format(calc.get_exchange_rate(date_string)))
 
 
 if __name__ == "__main__":
