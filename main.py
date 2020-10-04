@@ -1,6 +1,7 @@
-import requests
-import fileinput
 import datetime
+import fileinput
+import requests
+import sys
 from bs4 import BeautifulSoup
 
 
@@ -31,12 +32,26 @@ class converter:
         return 1.0 / float(rate_str)
 
 
+def print_rates_for_this_month(calc):
+    now = datetime.datetime.now()
+    first_of_month = now.replace(day=1).strftime('%Y-%m-%d')
+    print('{}: {:.3f}'.format(first_of_month,
+          calc.get_exchange_rate(first_of_month)))
+    if now.day >= 16:
+        sixteenth_of_month = now.replace(day=16).strftime('%Y-%m-%d')
+        print('{}: {:.3f}'.format(sixteenth_of_month,
+              calc.get_exchange_rate(sixteenth_of_month)))
+
+
 def main():
     calc = converter()
+    if sys.stdin.isatty():
+        print_rates_for_this_month(calc)
+        return
+
     for line in fileinput.input():
         date_string = line.rstrip()
         datetime.datetime.strptime(date_string, '%Y-%m-%d')
-
         print('{:.3f}'.format(calc.get_exchange_rate(date_string)))
 
 
