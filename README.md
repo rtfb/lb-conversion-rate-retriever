@@ -22,12 +22,8 @@ python main.py /tmp/dates
 ```
 The script will then write exchange rates in the same order to stdout
 ```
-1,095
-1,0977
-1,1234
-1,2286
-```
-NOTE: the decimal separator used by The Bank of Lithuania is "," and I didn't bother changing it. If you need other decimal separators - just use `sed`
-```
-python main.py /tmp/dates | sed s/,/./
+0.913
+0.911
+0.890
+0.814
 ```
